@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager with Firebase Realtime Database</title>
+    <link rel="stylesheet" href="styles.css">
+    
+   
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="taskApp" ng-controller="TaskController">
+    <div class="container">
+        <h1>Task Manager</h1>
+
+        <div class="task-input">
+            <input type="text" ng-model="newTask.title" placeholder="Task Title">
+            <input type="text" ng-model="newTask.description" placeholder="Task Description">
+            <input type="text" ng-model="newTask.employeeId" placeholder="Employee ID">
+            <input type="date" ng-model="newTask.deadline" placeholder="Deadline">
+            <input type="date" ng-model="newTask.assignDate" placeholder="Assign Date">
+            <button ng-click="addTask()">Add Task</button>
+        </div>
+
+        <ul class="task-list">
+            <li ng-repeat="task in tasks">
+                <div class="task">
+                    <strong>{{ task.title }}</strong> - {{ task.description }}
+                    <p>Employee ID: {{ task.employeeId }}</p>
+                    <p>Deadline: {{ task.deadline }}</p>
+                    <p>Assign Date: {{ task.assignDate }}</p>
+                    <button ng-click="editTask(task)">Edit</button>
+                    <button ng-click="deleteTask(task.id)">Delete</button>
+                </div>
+                <div class="edit-section" ng-show="task.editing">
+                    <input type="text" ng-model="task.title">
+                    <input type="text" ng-model="task.description">
+                    <input type="text" ng-model="task.employeeId">
+                    <input type="date" ng-model="task.deadline">
+                    <input type="date" ng-model="task.assignDate">
+                    <button ng-click="updateTask(task)">Update</button>
+                    <button ng-click="task.editing = false">Cancel</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
